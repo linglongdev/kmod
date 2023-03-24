@@ -1,0 +1,48 @@
+package:
+  id: kmod
+  name: kmod
+  version: 26.1
+  kind: lib
+  description: |
+    kmod.
+
+base:
+  id: org.deepin.base
+  version: 20.5.0
+
+depends:
+- id: xz-utils
+  version: 5.2.4.1
+- id: libxslt
+  version: 1.1.32.3
+
+source:
+  kind: git
+  url: https://github.com/deepin-community/kmod.git
+  version: master
+  commit: 531974f5c2be56a2d5d0d8fdbac2609f3f8240d8
+  patch:
+  - ''
+  - '# fixes to be pushed upstream'
+  - ''
+  - '# features to be pushed upstream'
+  - ''
+  - '# Debian integration'
+  - aliases_conf
+  - debian_manpages
+variables:
+  extra_args: |
+    --with-rootlibdir=${PREFIX}/lib/${TRIPLET} \
+    --disable-manpages \
+    --with-xz \
+    --with-openssl \
+    --enable-debug
+
+build:
+  kind: manual
+  manual:
+    configure: |
+      ./autogen.sh c
+      ./configure --prefix=${PREFIX}  --libdir=${PREFIX}/lib/${TRIPLET} ${extra_args}
+      make ${jobs} 
+      make install
