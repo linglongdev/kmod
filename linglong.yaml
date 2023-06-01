@@ -36,6 +36,7 @@ build:
   kind: manual
   manual:
     configure: |
+      update-alternatives --auto automake
       ./autogen.sh c
       ./configure --prefix=${PREFIX}  --libdir=${PREFIX}/lib/${TRIPLET} ${extra_args}
       make ${jobs} 
